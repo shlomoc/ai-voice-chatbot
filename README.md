@@ -60,6 +60,12 @@ npm install
 
 ### Starting the Backend Server
 
+From the project root directory, create the directories to store audio files:
+
+```bash
+mkdir -p static/audio
+```
+
 Ensure your virtual environment is activated, then run:
 
 ```bash
