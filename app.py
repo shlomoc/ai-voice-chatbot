@@ -56,7 +56,7 @@ def handle_audio(data):
 
 def get_response(prompt):
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
@@ -73,15 +73,13 @@ def get_response(prompt):
 
 
 def synthesize_audio(text, audio_filename):
-    audio = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=text,
-    )
-
     audio_url = os.path.join("static", "audio", audio_filename)
-    audio.stream_to_file(audio_url)
-    print(type(audio), audio)
+    with client.audio.speech.with_streaming_response.create(
+        model="tts-1",
+        voice="nova",
+        input=text,
+        ) as  response:
+            response.stream_to_file(audio_url)
 
     return audio_url
 
